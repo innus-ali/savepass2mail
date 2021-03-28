@@ -1,0 +1,17 @@
+certifi==2020.6.20
+cffi==1.14.3
+chardet==3.0.4
+crypto==1.4.1
+cryptography==3.2.1
+idna==2.10
+jeepney==0.4.3
+Naked==0.1.31
+pycparser==2.20
+pycrypto==2.6.1
+PyYAML==5.3.1
+requests==2.24.0
+SecretStorage==3.1.2
+shellescape==3.8.1
+six==1.15.0
+urllib3==1.25.11
+pycryptodomex==3.10.1
